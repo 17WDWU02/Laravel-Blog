@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Laravel Home Page</title>
+	<title>About Page</title>
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
@@ -32,18 +32,14 @@
 			</form>
 		</div>
 	</nav>
-	<div class="container-fluid full">
-		<img class="img-responsive" src="http://via.placeholder.com/1920x500">
-	</div>
+
 	<div class="container">
-		<h1>Welcome to my Blog Site</h1>
+		<h1>About Page</h1>
 	</div>
 	
-
 
 	<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
-
 </body>
 </html>
