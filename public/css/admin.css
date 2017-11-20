@@ -1,0 +1,30 @@
+body{
+	margin-top: 60px;
+}
+img{
+	max-width: 100%;
+}
+
+.full{
+	padding: 0
+}
+
+.logout{
+	color: black !important;
+}
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+}
+
+.sidebar .nav-link {
+    border-radius: 0;
+}
