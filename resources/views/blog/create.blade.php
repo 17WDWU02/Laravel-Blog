@@ -15,23 +15,36 @@
 <div class="container">
 	<h1>Add new Blog Post</h1>
 
-	<form method="post" action="" enctype="multipart/form-data">
+	@if($errors->all() )
+	<div class="alert alert-danger">
+		<ul>
+			@foreach($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+	@endif
+
+	{{ Form::open(array('url' => 'blog', 'files' => true)) }}
+
 		<div class="form-group">
-			<label for="title">Title</label>
-			<input type="text" class="form-control" placeholder="post title" name="title">
+			{{ Form::label('post_title', 'Post Title')}}
+			{{ Form::text('post_title', '', array('class' => 'form-control'))}}
 		</div>
+
 		<div class="form-group">
-			<label for="description">Description</label>
-			<textarea class="form-control" name="description" placeholder="Blog Content" rows="5"></textarea>
+			{{ Form::label('post_description', 'Body of Post') }}
+			{{ Form::textarea('post_description', '', array('class' => 'form-control'))}}
 		</div>
+
 		<div class="form-group">
-			<label for="image">Image</label>
-			<input type="file" class="form-control" name="image">
+			{{ Form::label('image', 'Post Image') }}
+			{{ Form::file('image', array('class' => 'form-control'))}}
 		</div>
-		<div class="form-group">
-			<button type="submit" class="btn btn-outline-success">Submit New Blog Post</button>
-		</div>
-	</form>
+
+		{{ Form::submit('Add New Post', array('class' => 'btn btn-primary')) }}
+	{{ Form::close()}}
+
 
 </div>
 @endsection

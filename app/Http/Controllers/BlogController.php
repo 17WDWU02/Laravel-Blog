@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BlogPosts;
 
 class BlogController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +40,19 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'post_title' => 'required|min:5|max:255',
+            'post_description' => 'required',
+            'image' => 'image|dimensions:min_width=200'
+        ]);
+
+        $newPost = new BlogPosts();
+        $newPost->post_title = $request->post_title;
+        $newPost->post_description = $request->post_description;
+        $newPost->image_name = uniqid();
+
+        $newPost->save();
+        return redirect('blog.show');
     }
 
     /**
@@ -45,7 +63,7 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        var_dump("form was successfully send, new blog post added");
     }
 
     /**
