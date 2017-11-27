@@ -10,7 +10,7 @@
 @section('content')
 	<div class="container">
 		<h1>{{ $post->post_title }}</h1>
-		<p><small>Created at : {{$post->created_at}}</small></p>
+		<p><small>Created at : {{$post->created_at}} by {{$userInfo->name}}</small></p>
 		<hr>
 		<div class="row">
 			<div class="col col-xs-4">
@@ -21,13 +21,15 @@
 			</div>
 		</div>
 		@if(Auth::user())
-		<div class="row">
-			<a class="btn btn-outline-primary" href="{{ route('blog.edit', $post->id ) }}" role="button">Edit Post</a>
-			
-			{{Form::open(['method' => 'DELETE', 'route' => ['blog.destroy', $post->id]])}}
-				<button type="submit" class="btn btn-outline-danger">Delete Post</button>
-			{{Form::close()}}
-		</div>
+			@if($post->userCanEdit(Auth::user()))
+			<div class="row">
+				<a class="btn btn-outline-primary" href="{{ route('blog.edit', $post->id ) }}" role="button">Edit Post</a>
+				
+				{{Form::open(['method' => 'DELETE', 'route' => ['blog.destroy', $post->id]])}}
+					<button type="submit" class="btn btn-outline-danger">Delete Post</button>
+				{{Form::close()}}
+			</div>
+			@endif
 		@endif		
 
 	</div>

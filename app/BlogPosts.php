@@ -11,4 +11,12 @@ class BlogPosts extends Model
     protected $fillable = [
         'post_title', 'post_description', 'image_name',
     ];
+
+    public function user(){
+    	return $this->belongsTo('App\User');
+    }
+
+    function userCanEdit(User $user){
+    	return $this->user_id == $user->id;
+    }
 }

@@ -31,3 +31,12 @@ Route::get('admin', 'AdminController@index')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('search', 'SearchController@index');
+
+
+
+
+
+
+

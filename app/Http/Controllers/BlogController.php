@@ -51,6 +51,7 @@ class BlogController extends Controller
         $newPost = new BlogPosts();
         $newPost->post_title = $request->post_title;
         $newPost->post_description = $request->post_description;
+        $newPost->user_id = \Auth::user()->id;
 
         $filename = uniqid();
         $newPost->image_name = $filename;
@@ -84,7 +85,8 @@ class BlogController extends Controller
     public function show($id)
     {
       $post = BlogPosts::where('id', "=", $id)->firstOrFail();
-      return view('blog.show', compact('post'));
+      $userInfo = $post->user;
+      return view('blog.show', compact('post', 'userInfo'));
     }
 
     /**
@@ -96,6 +98,10 @@ class BlogController extends Controller
     public function edit($id)
     {
       $post = BlogPosts::where('id', "=", $id)->firstOrFail();
+
+      if(\Auth::user()->id !== $post->user_id){
+        return abort(401);
+      }
       return view('blog.edit', compact('post'));
     }
 
@@ -109,6 +115,9 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $post = BlogPosts::findOrFail($id);
+        if(\Auth::user()->id !== $post->user_id){
+            return abort(401);
+        }
         $this->validate($request, [
             'post_title' => 'required|min:5|max:255',
             'post_description' => 'required',
@@ -154,6 +163,9 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $post = BlogPosts::findOrFail($id);
+        if(\Auth::user()->id !== $post->user_id){
+            return abort(401);
+        }
         $filename = $post->image_name;
         unlink('images/uploads/'.$filename.'-large.jpg');
         unlink('images/uploads/'.$filename.'-thumb.jpg');
