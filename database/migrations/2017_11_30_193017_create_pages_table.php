@@ -17,6 +17,8 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('page_name', 255);
             $table->string('url_alais')->unique();
+            $table->string('featured_image', 100)->nullable();
+            $table->text('page_content')->nullable();
             $table->string('template', 100);
             $table->timestamps();
         });

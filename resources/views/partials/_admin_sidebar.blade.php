@@ -1,6 +1,6 @@
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-        <a class="nav-link active" href="#">Dashboard <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{url('admin')}}">Dashboard <span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Blogs</a>

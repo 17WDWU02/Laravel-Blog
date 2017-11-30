@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
 use File;
 use Storage;
 use App\Pages;
@@ -47,12 +48,32 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'pageName' => 'required',
-            'template' => 'required'
+            'featuredImage' => 'image|dimensions:min_width=200',
+            'template' => 'required',
         ]);
         $newPage = new Pages;
         $newPage->page_name = $request->pageName;
         $newPage->url_alais = str_replace(' ', '-', $request->pageName);
+        $newPage->page_content = $request->pageContent;
         $newPage->template = $request->template;
+
+        if($request->featuredImage){
+            $filename = uniqid();
+            $newPage->featured_image = $filename;
+            $manager = new ImageManager();
+            $uploadedImage = $manager->make($request->featuredImage);
+            //largerImage
+            $uploadedImage->resize(500, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+            $uploadedImage->save('images/uploads/'.$filename.'-large.jpg', 100);
+
+            //thumbnail
+            $uploadedImage->fit(300, 200, function($constraint){
+                $constraint->upsize();
+            });
+            $uploadedImage->save('images/uploads/'.$filename.'-thumb.jpg', 100);
+        }
         $newPage->save();
         return redirect()->route('pages.index');
     }
