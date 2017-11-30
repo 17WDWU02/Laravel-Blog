@@ -62,6 +62,10 @@ return [
             'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
         ],
+        'views' => [
+            'driver' => 'local',
+            'root' => base_path('resources/views'),
+        ],
 
     ],
 
